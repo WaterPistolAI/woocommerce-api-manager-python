@@ -1,6 +1,6 @@
-# WC API Manager Python SDK
+# WC API Manager Python Library
 
-This is a Python SDK for interacting with the WC API Manager.
+This is a Python Library for interacting with the WC API Manager.
 
 ## Features
 
