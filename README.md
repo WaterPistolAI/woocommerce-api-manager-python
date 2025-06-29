@@ -12,7 +12,7 @@ A Python library for interacting with the WC API Manager, providing easy integra
 To install the WC API Manager Python Library, run the following command:
 
 ```bash
-pip install wc-api-manager
+pip install git+https://github.com/unclemusclez/wc-api-manager-python
 ```
 
 ## Usage Example
