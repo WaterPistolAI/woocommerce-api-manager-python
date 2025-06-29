@@ -1,5 +1,9 @@
 from setuptools import setup, find_packages
 
+import pprint
+packages = find_packages()
+print("Found packages:")
+pprint.pprint(packages)
 setup(
     name='wc_api_manager',
     version='0.1.0',
@@ -9,15 +13,15 @@ setup(
     author='Devin J. Dawson',
     author_email='devin@waterpistol.co',
     url='https://github.com/unclemusclez/wc-api-manager-python',
-    packages=find_packages(),
+    packages=packages,
     install_requires=[
-        'requests',
-        'typing'
+        'requests'
     ],
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
+    license='MIT',
     python_requires='>=3.6',
 )
