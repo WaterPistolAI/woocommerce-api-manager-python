@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='wc_api_manager',
+    name='wc-api-manager',
     version='0.1.0',
     description='Python Library for WooCommerce Kestrel API Manager',
     long_description=open('README.md').read(),
