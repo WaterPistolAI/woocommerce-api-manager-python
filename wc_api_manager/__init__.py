@@ -1,1 +1,1 @@
-from wc_api_manager import APIClient, LicenseManager
+from .wc_api_manager import APIClient, LicenseManager
