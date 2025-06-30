@@ -44,7 +44,7 @@ class LicenseManager:
     """
     Manages license-related operations through an API.
     """
-    def __init__(self, api_url: str, product_id: str, software_version: str):
+    def __init__(self, api_url: str, product_id: str, software_version: Optional[str] = None):
         """
         Initializes the LicenseManager.
         
@@ -57,7 +57,7 @@ class LicenseManager:
         self.software_version = software_version
         self.api_client = APIClient(api_url)
 
-    def activate(self, api_key: str, product_id: str, instance: str, object: str, version: str):
+    def activate(self, api_key: str, product_id: str, instance: str, object: Optional[str], version: Optional[str]):
         """
         Activates a license.
         
@@ -105,7 +105,7 @@ class LicenseManager:
             print(f"An error occurred: {e}")
             return None
 
-    def status(self, api_key: str, product_id: str, instance: str, version: str):
+    def status(self, api_key: str, product_id: str, instance: str, version: Optional[str] = None):
         """
         Checks the status of a license.
         
@@ -167,7 +167,7 @@ class LicenseManager:
             print(f"An error occurred: {e}")
             return None
 
-    def information(self, api_key: str, product_id: str, plugin_name: str, instance: str, version: str):
+    def information(self, api_key: str, product_id: str, plugin_name: str, instance: str, version: Optional[str] = None):
         """
         Retrieves information about a product.
         

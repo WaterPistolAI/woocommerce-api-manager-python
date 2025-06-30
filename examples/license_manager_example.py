@@ -9,7 +9,10 @@ def main():
     object = 'activation_object'
     version = '1.0.0'
 
+    # software_version is optional
     license_manager = LicenseManager(api_url, product_id, software_version)
+    # Alternatively, you can omit software_version
+    # license_manager = LicenseManager(api_url, product_id)
 
     # Activate the license
     activation_result = license_manager.activate(api_key, product_id, instance, object, version)
