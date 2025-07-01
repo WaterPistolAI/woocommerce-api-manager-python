@@ -1,45 +1,5 @@
 from typing import Optional
 from woocommerce import API
-# import requests
-
-# class APIClient:
-#     """
-#     A client for making HTTP requests to a specified base URL.
-#     """
-#     def __init__(self, base_url: str):
-#         """
-#         Initializes the APIClient with a base URL.
-        
-#         :param base_url: The base URL for the API.
-#         """
-#         self.base_url = base_url
-
-#     def get(self, endpoint: str, params: Optional[dict] = None):
-#         """
-#         Makes a GET request to the specified endpoint.
-        
-#         :param endpoint: The endpoint to request.
-#         :param params: Optional parameters for the request.
-#         :return: The JSON response from the server.
-#         """
-#         url = f"{self.base_url}{endpoint}"
-#         response = requests.get(url, params=params)
-#         response.raise_for_status()  # Raise an exception for bad status codes
-#         return response.json()
-
-#     def post(self, endpoint: str, data: dict, json_data: Optional[dict] = None):
-#         """
-#         Makes a POST request to the specified endpoint.
-        
-#         :param endpoint: The endpoint to request.
-#         :param data: Data to be sent as form data.
-#         :param json_data: Optional JSON data to be sent.
-#         :return: The JSON response from the server.
-#         """
-#         url = f"{self.base_url}{endpoint}"
-#         response = requests.post(url, data=data, json=json_data)
-#         response.raise_for_status()  # Raise an exception for bad status codes
-#         return response.json()
 
 class LicenseManager:
     """

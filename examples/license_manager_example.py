@@ -12,8 +12,9 @@ def main():
     version = '1.0.0'
     plugin_name = 'your_plugin_name'
 
-    license_manager_with_version = LicenseManager(f"{url}/wc-am-api", product_id, software_version)
-    license_manager_without_version = LicenseManager(f"{url}/wc-am-api", product_id)
+    license_manager_with_version = LicenseManager(url, consumer_key, consumer_secret, product_id, software_version)
+    license_manager_without_version = LicenseManager(url, consumer_key, consumer_secret, product_id)
+    license_manager_without_version = LicenseManager(url, consumer_key, consumer_secret, product_id)
 
     # Activate the license
     activation_result_with_version = license_manager_with_version.activate(api_key, product_id, instance, obj, version)
