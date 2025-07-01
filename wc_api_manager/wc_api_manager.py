@@ -1,4 +1,5 @@
 from typing import Optional
+from woocommerce import API
 import requests
 
 class APIClient:
@@ -44,6 +45,7 @@ class LicenseManager:
     """
     Manages license-related operations through an API.
     """
+    
     def __init__(self, api_url: str, product_id: str, software_version: Optional[str] = None):
         """
         Initializes the LicenseManager.
@@ -56,6 +58,20 @@ class LicenseManager:
         self.product_id = product_id
         self.software_version = software_version
         self.api_client = APIClient(api_url)
+
+    def connect_to_woocommerce(self, url: str, consumer_key: str, consumer_secret: str) -> 'API':
+        try:
+            wcapi = API(
+                url=url,
+                consumer_key=consumer_key,
+                consumer_secret=consumer_secret,
+                wp_api=True,
+                version="wc/v3"
+            )
+            return wcapi
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return NotImplemented
 
     def activate(self, api_key: str, product_id: str, instance: str, object: Optional[str], version: Optional[str]):
         """
