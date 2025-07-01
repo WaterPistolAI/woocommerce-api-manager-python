@@ -1,63 +1,70 @@
 from typing import Optional
 from woocommerce import API
-import requests
+# import requests
 
-class APIClient:
-    """
-    A client for making HTTP requests to a specified base URL.
-    """
-    def __init__(self, base_url: str):
-        """
-        Initializes the APIClient with a base URL.
+# class APIClient:
+#     """
+#     A client for making HTTP requests to a specified base URL.
+#     """
+#     def __init__(self, base_url: str):
+#         """
+#         Initializes the APIClient with a base URL.
         
-        :param base_url: The base URL for the API.
-        """
-        self.base_url = base_url
+#         :param base_url: The base URL for the API.
+#         """
+#         self.base_url = base_url
 
-    def get(self, endpoint: str, params: Optional[dict] = None):
-        """
-        Makes a GET request to the specified endpoint.
+#     def get(self, endpoint: str, params: Optional[dict] = None):
+#         """
+#         Makes a GET request to the specified endpoint.
         
-        :param endpoint: The endpoint to request.
-        :param params: Optional parameters for the request.
-        :return: The JSON response from the server.
-        """
-        url = f"{self.base_url}{endpoint}"
-        response = requests.get(url, params=params)
-        response.raise_for_status()  # Raise an exception for bad status codes
-        return response.json()
+#         :param endpoint: The endpoint to request.
+#         :param params: Optional parameters for the request.
+#         :return: The JSON response from the server.
+#         """
+#         url = f"{self.base_url}{endpoint}"
+#         response = requests.get(url, params=params)
+#         response.raise_for_status()  # Raise an exception for bad status codes
+#         return response.json()
 
-    def post(self, endpoint: str, data: dict, json_data: Optional[dict] = None):
-        """
-        Makes a POST request to the specified endpoint.
+#     def post(self, endpoint: str, data: dict, json_data: Optional[dict] = None):
+#         """
+#         Makes a POST request to the specified endpoint.
         
-        :param endpoint: The endpoint to request.
-        :param data: Data to be sent as form data.
-        :param json_data: Optional JSON data to be sent.
-        :return: The JSON response from the server.
-        """
-        url = f"{self.base_url}{endpoint}"
-        response = requests.post(url, data=data, json=json_data)
-        response.raise_for_status()  # Raise an exception for bad status codes
-        return response.json()
+#         :param endpoint: The endpoint to request.
+#         :param data: Data to be sent as form data.
+#         :param json_data: Optional JSON data to be sent.
+#         :return: The JSON response from the server.
+#         """
+#         url = f"{self.base_url}{endpoint}"
+#         response = requests.post(url, data=data, json=json_data)
+#         response.raise_for_status()  # Raise an exception for bad status codes
+#         return response.json()
 
 class LicenseManager:
     """
     Manages license-related operations through an API.
     """
     
-    def __init__(self, api_url: str, product_id: str, software_version: Optional[str] = None):
+    def __init__(self, url: str, consumer_key: str, consumer_secret: str, product_id: str, software_version: Optional[str] = None):
         """
         Initializes the LicenseManager.
         
-        :param api_url: The URL of the license management API.
+        :param url: The URL of the WooCommerce store.
+        :param consumer_key: The consumer key for the WooCommerce API.
+        :param consumer_secret: The consumer secret for the WooCommerce API.
         :param product_id: The ID of the product.
         :param software_version: The version of the software.
         """
-        self.api_url = api_url
+        self.wcapi = API(
+            url=url,
+            consumer_key=consumer_key,
+            consumer_secret=consumer_secret,
+            wp_api=True,
+            version="wc/v3"
+        )
         self.product_id = product_id
         self.software_version = software_version
-        self.api_client = APIClient(api_url)
 
     def connect_to_woocommerce(self, url: str, consumer_key: str, consumer_secret: str) -> 'API':
         try:
@@ -93,8 +100,8 @@ class LicenseManager:
                 'object': object,
                 'version': version
             }
-            return self.api_client.post('/wc-am-api', args)
-        except requests.RequestException as e:
+            return self.wcapi.post("wc-am-api", data=args)
+        except Exception as e:
             # Handle the exception
             print(f"An error occurred: {e}")
             return None
@@ -115,7 +122,7 @@ class LicenseManager:
                 'product_id': product_id,
                 'instance': instance
             }
-            return self.api_client.post('/wc-am-api', args)
+            return self.wcapi.post('/wc-am-api', args)
         except requests.RequestException as e:
             # Handle the exception
             print(f"An error occurred: {e}")
@@ -139,7 +146,7 @@ class LicenseManager:
                 'instance': instance,
                 'version': version
             }
-            return self.api_client.post('/wc-am-api', args)
+            return self.wcapi.post('/wc-am-api', args)
         except requests.RequestException as e:
             # Handle the exception
             print(f"An error occurred: {e}")
@@ -159,7 +166,7 @@ class LicenseManager:
                 'api_key': api_key,
                 'instance': instance
             }
-            return self.api_client.post('/wc-am-api', args)
+            return self.wcapi.post('/wc-am-api', args)
         except requests.RequestException as e:
             # Handle the exception
             print(f"An error occurred: {e}")
@@ -177,7 +184,7 @@ class LicenseManager:
                 'wc_am_action': 'verify_api_key_is_active',
                 'api_key': api_key
             }
-            return self.api_client.post('/wc-am-api', args)
+            return self.wcapi.post('/wc-am-api', args)
         except requests.RequestException as e:
             # Handle the exception
             print(f"An error occurred: {e}")
@@ -203,7 +210,7 @@ class LicenseManager:
                 'instance': instance,
                 'version': version
             }
-            return self.api_client.post('/wc-am-api', args)
+            return self.wcapi.post('/wc-am-api', args)
         except requests.RequestException as e:
             # Handle the exception
             print(f"An error occurred: {e}")
@@ -232,7 +239,7 @@ class LicenseManager:
             }
             if slug:
                 args['slug'] = slug
-            return self.api_client.post('/wc-am-api', args)
+            return self.wcapi.post('/wc-am-api', args)
         except requests.RequestException as e:
             # Handle the exception
             print(f"An error occurred: {e}")

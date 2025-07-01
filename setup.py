@@ -15,7 +15,6 @@ setup(
     url='https://github.com/unclemusclez/wc-api-manager-python',
     packages=packages,
     install_requires=[
-        'requests',
         'woocommerce'
     ],
     classifiers=[
