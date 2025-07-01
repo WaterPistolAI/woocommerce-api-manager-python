@@ -1,19 +1,27 @@
+import os
 from wc_api_manager import LicenseManager
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def main():
-    url = 'https://yourstore.com'
-    consumer_key = 'your_consumer_key'
-    consumer_secret = 'your_consumer_secret'
-    product_id = 'your_product_id'
-    software_version = '1.0.0'
-    api_key = 'your_api_key'
-    instance = 'unique_instance_id'
-    obj = 'activation_object'
-    version = '1.0.0'
-    plugin_name = 'your_plugin_name'
+    url = os.getenv('WC_URL')
+    consumer_key = os.getenv('WC_CONSUMER_KEY')
+    consumer_secret = os.getenv('WC_CONSUMER_SECRET')
+    product_id = os.getenv('WC_PRODUCT_ID')
+    software_version = os.getenv('WCAM_SOFTWARE_VERSION')
+    api_key = os.getenv('WCAM_API_KEY')
+    instance = os.getenv('WCAM_INSTANCE')
+    obj = os.getenv('WCAM_OBJ')
+    version = os.getenv('WCAM_VERSION')
+    plugin_name = os.getenv('WCAM_PLUGIN_NAME')
+
+    env_vars = [url, consumer_key, consumer_secret, product_id, software_version, api_key, instance, obj, version, plugin_name]
+    if not all(env_vars):
+        raise ValueError("Missing required environment variables")
+    url, consumer_key, consumer_secret, product_id, software_version, api_key, instance, obj, version, plugin_name = [str(var) for var in env_vars]
 
     license_manager_with_version = LicenseManager(url, consumer_key, consumer_secret, product_id, software_version)
-    license_manager_without_version = LicenseManager(url, consumer_key, consumer_secret, product_id)
     license_manager_without_version = LicenseManager(url, consumer_key, consumer_secret, product_id)
 
     # Activate the license
