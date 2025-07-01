@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def main():
+    # Load environment variables
     url = os.getenv('WC_URL')
     consumer_key = os.getenv('WC_CONSUMER_KEY')
     consumer_secret = os.getenv('WC_CONSUMER_SECRET')
@@ -16,12 +17,17 @@ def main():
     version = os.getenv('WCAM_VERSION')
     plugin_name = os.getenv('WCAM_PLUGIN_NAME')
 
-    env_vars = [url, consumer_key, consumer_secret, product_id, software_version, api_key, instance, obj, version, plugin_name]
+    # Validate environment variables
+    env_vars = [url, product_id, api_key, instance, obj, version, plugin_name]
     if not all(env_vars):
         raise ValueError("Missing required environment variables")
-    url, consumer_key, consumer_secret, product_id, software_version, api_key, instance, obj, version, plugin_name = [str(var) for var in env_vars]
+    
+    # Convert all to strings
+    url, consumer_key, consumer_secret, product_id, api_key, instance, obj, version, plugin_name = [str(var) for var in env_vars]
+    software_version = str(software_version) if software_version else None
 
-    license_manager_with_version = LicenseManager(url, consumer_key, consumer_secret, product_id, software_version)
+    # Instantiate LicenseManager
+    license_manager_with_version = LicenseManager(url, consumer_key, consumer_secret, product_id, software_version=software_version)
     license_manager_without_version = LicenseManager(url, consumer_key, consumer_secret, product_id)
 
     # Activate the license

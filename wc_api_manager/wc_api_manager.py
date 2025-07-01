@@ -1,12 +1,17 @@
 from typing import Optional
 from woocommerce import API
 
+endpoint = ''
+consumer_key = ''
+consumer_secret = ''
+data = ''
+
 class LicenseManager:
     """
     Manages license-related operations through an API.
     """
     
-    def __init__(self, url: str, consumer_key: str, consumer_secret: str, product_id: str, software_version: Optional[str] = None):
+    def __init__(self, url: str, consumer_key: str, consumer_secret: str, product_id: str, *, software_version: Optional[str] = None):
         """
         Initializes the LicenseManager.
         
@@ -20,8 +25,8 @@ class LicenseManager:
             url=url,
             consumer_key=consumer_key,
             consumer_secret=consumer_secret,
-            wp_api=True,
-            version="wc/v3"
+            wp_api=False,
+            version="wc-am-api"
         )
         self.product_id = product_id
         self.software_version = software_version
@@ -32,8 +37,8 @@ class LicenseManager:
                 url=url,
                 consumer_key=consumer_key,
                 consumer_secret=consumer_secret,
-                wp_api=True,
-                version="wc/v3"
+                wp_api=False,
+                version="wc-am-api"
             )
             return wcapi
         except Exception as e:
@@ -60,7 +65,7 @@ class LicenseManager:
                 'object': object,
                 'version': version
             }
-            return self.wcapi.post("wc-am-api", data=args)
+            return self.wcapi.post(endpoint, data, params=args)
         except Exception as e:
             # Handle the exception
             print(f"An error occurred: {e}")
@@ -82,7 +87,7 @@ class LicenseManager:
                 'product_id': product_id,
                 'instance': instance
             }
-            return self.wcapi.post('/wc-am-api', args)
+            return self.wcapi.post(endpoint, data, params=args)
         except Exception as e:
             # Handle the exception
             print(f"An error occurred: {e}")
@@ -106,7 +111,7 @@ class LicenseManager:
                 'instance': instance,
                 'version': version
             }
-            return self.wcapi.post('/wc-am-api', args)
+            return self.wcapi.post(endpoint, data, params=args)
         except Exception as e:
             # Handle the exception
             print(f"An error occurred: {e}")
@@ -126,7 +131,7 @@ class LicenseManager:
                 'api_key': api_key,
                 'instance': instance
             }
-            return self.wcapi.post('/wc-am-api', args)
+            return self.wcapi.post(endpoint, data, params=args)
         except Exception as e:
             # Handle the exception
             print(f"An error occurred: {e}")
@@ -144,7 +149,7 @@ class LicenseManager:
                 'wc_am_action': 'verify_api_key_is_active',
                 'api_key': api_key
             }
-            return self.wcapi.post('/wc-am-api', args)
+            return self.wcapi.post(endpoint, data, params=args)
         except Exception as e:
             # Handle the exception
             print(f"An error occurred: {e}")
@@ -170,7 +175,7 @@ class LicenseManager:
                 'instance': instance,
                 'version': version
             }
-            return self.wcapi.post('/wc-am-api', args)
+            return self.wcapi.post(endpoint, data, params=args)
         except Exception as e:
             # Handle the exception
             print(f"An error occurred: {e}")
@@ -199,7 +204,7 @@ class LicenseManager:
             }
             if slug:
                 args['slug'] = slug
-            return self.wcapi.post('/wc-am-api', args)
+            return self.wcapi.post(endpoint, data, params=args)
         except Exception as e:
             # Handle the exception
             print(f"An error occurred: {e}")
