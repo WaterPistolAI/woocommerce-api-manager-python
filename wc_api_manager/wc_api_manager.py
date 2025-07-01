@@ -123,7 +123,7 @@ class LicenseManager:
                 'instance': instance
             }
             return self.wcapi.post('/wc-am-api', args)
-        except requests.RequestException as e:
+        except Exception as e:
             # Handle the exception
             print(f"An error occurred: {e}")
             return None
@@ -147,7 +147,7 @@ class LicenseManager:
                 'version': version
             }
             return self.wcapi.post('/wc-am-api', args)
-        except requests.RequestException as e:
+        except Exception as e:
             # Handle the exception
             print(f"An error occurred: {e}")
             return None
@@ -167,7 +167,7 @@ class LicenseManager:
                 'instance': instance
             }
             return self.wcapi.post('/wc-am-api', args)
-        except requests.RequestException as e:
+        except Exception as e:
             # Handle the exception
             print(f"An error occurred: {e}")
             return None
@@ -185,7 +185,7 @@ class LicenseManager:
                 'api_key': api_key
             }
             return self.wcapi.post('/wc-am-api', args)
-        except requests.RequestException as e:
+        except Exception as e:
             # Handle the exception
             print(f"An error occurred: {e}")
             return None
@@ -211,7 +211,7 @@ class LicenseManager:
                 'version': version
             }
             return self.wcapi.post('/wc-am-api', args)
-        except requests.RequestException as e:
+        except Exception as e:
             # Handle the exception
             print(f"An error occurred: {e}")
             return None
@@ -240,7 +240,7 @@ class LicenseManager:
             if slug:
                 args['slug'] = slug
             return self.wcapi.post('/wc-am-api', args)
-        except requests.RequestException as e:
+        except Exception as e:
             # Handle the exception
             print(f"An error occurred: {e}")
             return None
