@@ -1,5 +1,5 @@
 import os
-from wc_api_manager import LicenseManager
+from woocommerce_api_manager import LicenseManager
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -18,37 +18,39 @@ def main():
     plugin_name = os.getenv('WCAM_PLUGIN_NAME')
 
     # Validate environment variables
-    env_vars = [url, product_id, api_key, instance, obj, version, plugin_name]
-    if not all(env_vars):
+    required_env_vars = [url, api_key, instance, obj, version, plugin_name]
+    if not all(required_env_vars):
         raise ValueError("Missing required environment variables")
     
-    # Convert all to strings
-    url, consumer_key, consumer_secret, product_id, api_key, instance, obj, version, plugin_name = [str(var) for var in env_vars]
+    # Convert product_id to int if it exists
+    product_id = int(product_id) if product_id else None
+
+    url, api_key, instance, obj, version, plugin_name = [str(var) for var in required_env_vars]
     software_version = str(software_version) if software_version else None
 
     # Instantiate LicenseManager
-    license_manager_with_version = LicenseManager(url, consumer_key, consumer_secret, product_id, software_version=software_version)
-    license_manager_without_version = LicenseManager(url, consumer_key, consumer_secret, product_id)
+    license_manager_with_version = LicenseManager(url, product_id, software_version=software_version)
+    license_manager_without_version = LicenseManager(url, product_id)
 
     # Activate the license
-    activation_result_with_version = license_manager_with_version.activate(api_key, product_id, instance, obj, version)
+    activation_result_with_version = license_manager_with_version.activate(api_key, str(product_id), instance, obj, version)
     print('Activation result with version:', activation_result_with_version)
 
-    activation_result_without_version = license_manager_without_version.activate(api_key, product_id, instance, obj, version)
+    activation_result_without_version = license_manager_without_version.activate(api_key, str(product_id), instance, obj, version)
     print('Activation result without version:', activation_result_without_version)
 
     # Check license status
-    status_result_with_version = license_manager_with_version.status(api_key, product_id, instance, version)
+    status_result_with_version = license_manager_with_version.status(api_key, str(product_id), instance, version)
     print('License status with version:', status_result_with_version)
 
-    status_result_without_version = license_manager_without_version.status(api_key, product_id, instance, version)
+    status_result_without_version = license_manager_without_version.status(api_key, str(product_id), instance, version)
     print('License status without version:', status_result_without_version)
 
     # Deactivate the license
-    deactivation_result_with_version = license_manager_with_version.deactivate(api_key, product_id, instance)
+    deactivation_result_with_version = license_manager_with_version.deactivate(api_key, str(product_id), instance)
     print('Deactivation result with version:', deactivation_result_with_version)
 
-    deactivation_result_without_version = license_manager_without_version.deactivate(api_key, product_id, instance)
+    deactivation_result_without_version = license_manager_without_version.deactivate(api_key, str(product_id), instance)
     print('Deactivation result without version:', deactivation_result_without_version)
 
     # Product list
@@ -60,11 +62,11 @@ def main():
     print('Verify API key is active:', verify_api_key_result)
 
     # Information
-    information_result = license_manager_with_version.information(api_key, product_id, plugin_name, instance, version)
+    information_result = license_manager_with_version.information(api_key, str(product_id), plugin_name, instance, version)
     print('Information:', information_result)
 
     # Update
-    update_result = license_manager_with_version.update(api_key, product_id, plugin_name, instance, version)
+    update_result = license_manager_with_version.update(api_key, str(product_id), plugin_name, instance, version)
     print('Update:', update_result)
 
 if __name__ == '__main__':
