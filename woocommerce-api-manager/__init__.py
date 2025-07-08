@@ -11,7 +11,7 @@ class LicenseManager:
     Manages license-related operations through an API.
     """
     
-    def __init__(self, url: str, consumer_key: str, consumer_secret: str, product_id: str, *, software_version: Optional[str] = None):
+    def __init__(self, url: str, product_id: Optional[int] = None, *, software_version: Optional[str] = None, consumer_key: Optional[str] = '', consumer_secret: Optional[str] = ''):
         """
         Initializes the LicenseManager.
         
