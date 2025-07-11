@@ -1,17 +1,14 @@
 from typing import Optional
 from woocommerce import API
 
-endpoint = ''
-consumer_key = ''
-consumer_secret = ''
-data = ''
-
 class LicenseManager:
     """
     Manages license-related operations through the WooCommerce API Manager.
     """
     
-    def __init__(self, url: str, product_id: Optional[int] = None, *, software_version: Optional[str] = None, consumer_key: Optional[str] = '', consumer_secret: Optional[str] = ''):
+    # def __init__(self, url: str, api_key: str, product_id: Optional[int] = None, *, software_version: Optional[str] = None, consumer_key: Optional[str] = '', consumer_secret: Optional[str] = ''):
+    def __init__(self, url: str):
+
         """
         Initializes the LicenseManager.
         
@@ -23,13 +20,12 @@ class LicenseManager:
         """
         self.wcapi = API(
             url=url,
-            consumer_key=consumer_key,
-            consumer_secret=consumer_secret,
+            consumer_key='',
+            consumer_secret='',
             wp_api=False,
-            version="wc-am-api"
+            version="wc-am-api",
         )
-        self.product_id = product_id
-        self.software_version = software_version
+        self.endpoint=''
 
     def _handle_response(self, response):
         """Parse API response and return JSON dict or None on failure."""
@@ -50,7 +46,7 @@ class LicenseManager:
         :param product_id: The product ID (defaults to self.product_id if None).
         :param instance: The instance identifier.
         :param object: The object being licensed.
-        :param version: The version of the product (defaults to self.software_version if None).
+        :param version: The version of the product.
         :return: Parsed JSON response dict or None on failure.
         """
         args = {
@@ -58,10 +54,10 @@ class LicenseManager:
             'api_key': api_key,
             'instance': instance,
             'object': object,
-            'product_id': product_id or self.product_id,
-            'version': version or self.software_version
+            'product_id': product_id,
+            'version': version 
         }
-        response = self.wcapi.get(endpoint, params=args)
+        response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
 
     def deactivate(self, api_key: str, instance: str, product_id: int):
@@ -69,7 +65,7 @@ class LicenseManager:
         Deactivates a license.
         
         :param api_key: The API key for authentication.
-        :param product_id: The product ID (defaults to self.product_id if None).
+        :param product_id: The product ID.
         :param instance: The instance identifier.
         :return: Parsed JSON response dict or None on failure.
         """
@@ -77,9 +73,9 @@ class LicenseManager:
             'wc_am_action': 'deactivate',
             'api_key': api_key,
             'instance': instance,
-            'product_id': product_id or self.product_id
+            'product_id': product_id
         }
-        response = self.wcapi.get(endpoint, params=args)
+        response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
 
     def status(self, api_key: str, instance: str, product_id: int, version: Optional[str] = None):
@@ -87,19 +83,19 @@ class LicenseManager:
         Checks the status of a license.
         
         :param api_key: The API key for authentication.
-        :param product_id: The product ID (defaults to self.product_id if None).
+        :param product_id: The product ID.
         :param instance: The instance identifier.
-        :param version: The version of the product (defaults to self.software_version if None).
+        :param version: The version of the product.
         :return: Parsed JSON response dict or None on failure.
         """
         args = {
             'wc_am_action': 'status',
             'api_key': api_key,
             'instance': instance,
-            'product_id': product_id or self.product_id,
-            'version': version or self.software_version
+            'product_id': product_id,
+            'version': version
         }
-        response = self.wcapi.get(endpoint, params=args)
+        response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
 
     def product_list(self, api_key: str, instance: str):
@@ -115,7 +111,7 @@ class LicenseManager:
             'api_key': api_key,
             'instance': instance
         }
-        response = self.wcapi.get(endpoint, params=args)
+        response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
 
     def verify_api_key_is_active(self, api_key: str):
@@ -129,37 +125,37 @@ class LicenseManager:
             'wc_am_action': 'verify_api_key_is_active',
             'api_key': api_key
         }
-        response = self.wcapi.get(endpoint, params=args)
+        response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
 
-    def information(self, api_key: str, instance: str, plugin_name: str, product_id: int, version: Optional[str] = None):
+    def information(self, api_key: str, instance: str, product_id: int, plugin_name: str, version: Optional[str] = None):
         """
         Retrieves information about a product.
         
         :param api_key: The API key for authentication.
-        :param product_id: The product ID (defaults to self.product_id if None).
+        :param product_id: The product ID.
         :param plugin_name: The name of the plugin.
         :param instance: The instance identifier.
-        :param version: The version of the product (defaults to self.software_version if None).
+        :param version: The version of the product .
         :return: Parsed JSON response dict or None on failure.
         """
         args = {
             'wc_am_action': 'information',
             'api_key': api_key,
             'instance': instance,
-            'product_id': product_id or self.product_id,
+            'product_id': product_id,
             'plugin_name': plugin_name,
-            'version': version or self.software_version
+            'version': version
         }
-        response = self.wcapi.get(endpoint, params=args)
+        response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
 
-    def update(self, api_key: str, instance: str, plugin_name: str, version: str, product_id: int, slug: Optional[str] = None):
+    def update(self, api_key: str, instance: str, product_id: int, plugin_name: str, version: str, slug: Optional[str] = None):
         """
         Updates a product. III
         
         :param api_key: The API key for authentication.
-        :param product_id: The product ID (defaults to self.product_id if None).
+        :param product_id: The product ID.
         :param plugin_name: The name of the plugin.
         :param instance: The instance identifier.
         :param version: The version of the product.
@@ -170,11 +166,11 @@ class LicenseManager:
             'wc_am_action': 'update',
             'api_key': api_key,
             'instance': instance,
-            'product_id': product_id or self.product_id,
+            'product_id': product_id,
             'plugin_name': plugin_name,
             'version': version
         }
         if slug:
             args['slug'] = slug
-        response = self.wcapi.get(endpoint, params=args)
+        response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
