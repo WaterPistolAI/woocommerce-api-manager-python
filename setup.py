@@ -6,7 +6,7 @@ print("Found packages:")
 pprint.pprint(packages)
 setup(
     name='woocommerce-api-manager',
-    version='0.4.1',
+    version='0.5.0',
     description='Python Library for WooCommerce Kestrel API Manager',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
