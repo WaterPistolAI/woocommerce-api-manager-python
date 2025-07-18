@@ -1,11 +1,15 @@
 import os
-import json
+import logging
 from woocommerce_api_manager import LicenseManager
 from dotenv import load_dotenv
 
 load_dotenv()
 
 def main():
+    # Configure logging
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logger = logging.getLogger(__name__)
+
     # Load environment variables
     url = os.getenv('WC_URL', '')
     product_id = os.getenv('WC_PRODUCT_ID', 0)
@@ -24,14 +28,10 @@ def main():
 
     try:
         product_id = int(product_id)
-        print(f"Product ID:{product_id}")
+        logger.info(f"Product ID: {product_id}")
     except ValueError:
+        logger.error("WC_PRODUCT_ID must be a valid integer")
         raise ValueError("WC_PRODUCT_ID must be a valid integer")
-
-    # product_name = ''
-    # product_name = ''
-    # product_version = ''
-
 
     # Instantiate LicenseManager
     license_manager = LicenseManager(url)
@@ -39,34 +39,29 @@ def main():
     # Deactivate the license
     deactivation_result = license_manager.deactivate(api_key, product_id, instance)
     if deactivation_result is not None:
-        print('Deactivation result:', deactivation_result)
-        print('Deactivation result:', deactivation_result.text)
+        logger.info('Deactivation result: %s', deactivation_result)
+        logger.info('Deactivation result JSON: %s', deactivation_result.json())
     else:
-        print('Deactivation failed: No response received')
+        logger.info('Deactivation failed: No response received')
         
     # Activate the license
     activation_result = license_manager.activate(api_key, product_id, instance, obj, product_version)
     if activation_result is not None:
-        print('Activation result:', activation_result)
-        print('Text result:', activation_result.text)
-        # print('Status Code result:', activation_result.status_code)
-        # print('Activation result JSON:', activation_result.json)
-        # if activation_result.error:
-        #     print('Activation result JSON:', activation_result.error)
-        
+        logger.info('Activation result: %s', activation_result)
+        logger.info('Activation result JSON: %s', activation_result.json())
     else:
-        print('Activation failed: No response received')
+        logger.info('Activation failed: No response received')
 
     # Check license status
     status_result = license_manager.status(api_key, product_id, instance)
     if status_result is not None:
-        print('License status:', status_result)
-        print('License status:', status_result.text)
+        logger.info('License status: %s', status_result)
+        logger.info('License status JSON: %s', status_result.json())
     else:
-        print('Failed to retrieve license status')
+        logger.info('Failed to retrieve license status')
         
     ##
-    # Note: If the return value for status_check is active, or for activated is true, 
+    # Note: If the return value for status_check is active, or for activated is true,
     # then the time limit has not expired and the API Key is still active. 
     # If this is for a subscription, then the subscription is still active. 
     # The API Manager verifies the API Key activation should still exists, 
@@ -78,42 +73,42 @@ def main():
     # Product list
     product_list_result = license_manager.product_list(api_key, instance)
     if product_list_result is not None:
-        print('Product list:', product_list_result)
-        print('Product list:', product_list_result.text)
+        logger.info('Product list: %s', product_list_result)
+        logger.info('Product list JSON: %s', product_list_result.json())
     else:
-        print('Failed to retrieve product list')
+        logger.info('Failed to retrieve product list')
 
     # Verify API key is active
     verify_api_key_result = license_manager.verify_api_key_is_active(api_key)
     if verify_api_key_result is not None:
-        print('Verify API key is active:', verify_api_key_result)
-        print('Verify API key is active:', verify_api_key_result.text)
+        logger.info('Verify API key is active: %s', verify_api_key_result)
+        logger.info('Verify API key is active JSON: %s', verify_api_key_result.json())
     else:
-        print('Failed to verify API key status')
+        logger.info('Failed to verify API key status')
         
-        # Information
+    # Information
     information_result = license_manager.information(product_id, product_name)
     if information_result is not None:
-        print('Information:', information_result)
-        print('Information:', information_result.text)
+        logger.info('Information: %s', information_result)
+        logger.info('Information JSON: %s', information_result.json())
     else:
-        print('Failed to retrieve information')
+        logger.info('Failed to retrieve information')
 
     # Information
-    authenticated_information_result = license_manager.authenticated_information(api_key, product_id, instance,  product_name, product_version)
+    authenticated_information_result = license_manager.authenticated_information(api_key, product_id, product_name, instance, product_version)
     if authenticated_information_result is not None:
-        print('Authenticated Information:', authenticated_information_result)
-        print('Authenticated Information:', authenticated_information_result.text)
+        logger.info('Authenticated Information: %s', authenticated_information_result)
+        logger.info('Authenticated Information JSON: %s', authenticated_information_result.json())
     else:
-        print('Failed to retrieve information')
+        logger.info('Failed to retrieve information')
 
     # Update
     update_result = license_manager.update(api_key, product_id, product_name, instance, product_version)
     if update_result is not None:
-        print('Update:', update_result)
-        print('Update:', update_result.text)
+        logger.info('Update: %s', update_result)
+        logger.info('Update JSON: %s', update_result.json())
     else:
-        print('Failed to perform update')
+        logger.info('Failed to perform update')
 
 if __name__ == '__main__':
     main() 

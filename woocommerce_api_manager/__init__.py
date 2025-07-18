@@ -56,7 +56,7 @@ class LicenseManager:
             'object': object,
             'version': version 
         }
-        print(f"Activate args: {args}")
+        # print(f"Activate args: {args}")
         response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
 
@@ -76,7 +76,7 @@ class LicenseManager:
             'instance': instance
 
         }
-        print(f"Deactivate args: {args}")
+        # print(f"Deactivate args: {args}")
         response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
 
@@ -97,7 +97,7 @@ class LicenseManager:
             'instance': instance,
             'version': version
         }
-        print(f"Status args: {args}")
+        # print(f"Status args: {args}")
         response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
 
@@ -114,7 +114,7 @@ class LicenseManager:
             'api_key': api_key,
             'instance': instance
         }
-        print(f"Product list args: {args}")
+        # print(f"Product list args: {args}")
         response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
 
@@ -129,7 +129,7 @@ class LicenseManager:
             'wc_am_action': 'verify_api_key_is_active',
             'api_key': api_key
         }
-        print(f"Verify API key args: {args}")
+        # print(f"Verify API key args: {args}")
         response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
 
@@ -146,8 +146,8 @@ class LicenseManager:
             'product_id': product_id,
             'plugin_name': plugin_name
         }
-        print(f"Information args: {args}")
-        print(f"Update args: {args}")
+        # print(f"Information args: {args}")
+        # print(f"Update args: {args}")
         response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
     
@@ -170,8 +170,8 @@ class LicenseManager:
             'plugin_name': plugin_name,
             'version': version
         }
-        print(f"Information args: {args}")
-        print(f"Update args: {args}")
+        # print(f"Information args: {args}")
+        # print(f"Update args: {args}")
         response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
 
