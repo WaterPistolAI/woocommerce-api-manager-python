@@ -1,7 +1,7 @@
 from typing import Optional
 from woocommerce import API
 
-class LicenseManager:
+class APIManager:
     """
     Manages license-related operations through the WooCommerce API Manager.
     """
@@ -9,7 +9,7 @@ class LicenseManager:
     def __init__(self, url: str):
 
         """
-        Initializes the LicenseManager.
+        Initializes the APIManager.
         
         :param url: The URL of the WooCommerce store (e.g., https://yourstore.com).
         # :param consumer_key: The consumer key for the WooCommerce API.
