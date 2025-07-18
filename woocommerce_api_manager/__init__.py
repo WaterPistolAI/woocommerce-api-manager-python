@@ -6,7 +6,6 @@ class LicenseManager:
     Manages license-related operations through the WooCommerce API Manager.
     """
     
-    # def __init__(self, url: str, api_key: str, product_id: Optional[int] = None, *, software_version: Optional[str] = None, consumer_key: Optional[str] = '', consumer_secret: Optional[str] = ''):
     def __init__(self, url: str):
 
         """
@@ -134,7 +133,25 @@ class LicenseManager:
         response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
 
-    def information(self, api_key: str, product_id: int, instance: str, plugin_name: str, version: Optional[str] = None):
+    def information(self, product_id: int, plugin_name: str):
+        """
+        Retrieves information about a product.
+        
+        :param product_id: The product ID.
+        :param plugin_name: The name of the plugin.
+        :return: Parsed JSON response dict or None on failure.
+        """
+        args = {
+            'wc_am_action': 'information',
+            'product_id': product_id,
+            'plugin_name': plugin_name
+        }
+        print(f"Information args: {args}")
+        print(f"Update args: {args}")
+        response = self.wcapi.get(self.endpoint, params=args)
+        return self._handle_response(response)
+    
+    def authenticated_information(self, api_key: str, product_id: int, plugin_name: str, instance: str, version: str):
         """
         Retrieves information about a product.
         
@@ -158,7 +175,8 @@ class LicenseManager:
         response = self.wcapi.get(self.endpoint, params=args)
         return self._handle_response(response)
 
-    def update(self, api_key: str, product_id: int, instance: str, plugin_name: str, version: str, slug: Optional[str] = None):
+
+    def update(self, api_key: str, product_id: int, plugin_name: str, instance: str, version: str, slug: Optional[str] = None):
         """
         Updates a product.
         

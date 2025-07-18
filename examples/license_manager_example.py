@@ -64,7 +64,15 @@ def main():
         print('License status:', status_result.text)
     else:
         print('Failed to retrieve license status')
-
+        
+    ##
+    # Note: If the return value for status_check is active, or for activated is true, 
+    # then the time limit has not expired and the API Key is still active. 
+    # If this is for a subscription, then the subscription is still active. 
+    # The API Manager verifies the API Key activation should still exists, 
+    # and deletes it if it should not, due to an expired time limit or inactive subscription, 
+    # before returning a response.
+    ##
 
 
     # Product list
@@ -82,17 +90,25 @@ def main():
         print('Verify API key is active:', verify_api_key_result.text)
     else:
         print('Failed to verify API key status')
-
-    # Information
-    information_result = license_manager.information(api_key, product_id, instance,  product_name)
+        
+        # Information
+    information_result = license_manager.information(product_id, product_name)
     if information_result is not None:
         print('Information:', information_result)
         print('Information:', information_result.text)
     else:
         print('Failed to retrieve information')
 
+    # Information
+    authenticated_information_result = license_manager.authenticated_information(api_key, product_id, instance,  product_name, product_version)
+    if authenticated_information_result is not None:
+        print('Authenticated Information:', authenticated_information_result)
+        print('Authenticated Information:', authenticated_information_result.text)
+    else:
+        print('Failed to retrieve information')
+
     # Update
-    update_result = license_manager.update(api_key, product_id, instance,  product_name, product_version)
+    update_result = license_manager.update(api_key, product_id, product_name, instance, product_version)
     if update_result is not None:
         print('Update:', update_result)
         print('Update:', update_result.text)
