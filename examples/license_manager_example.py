@@ -35,10 +35,17 @@ def main():
 
     # Instantiate LicenseManager
     license_manager = LicenseManager(url)
-
+    
+    # Deactivate the license
+    deactivation_result = license_manager.deactivate(api_key, product_id, instance)
+    if deactivation_result is not None:
+        print('Deactivation result:', deactivation_result)
+        print('Deactivation result:', deactivation_result.text)
+    else:
+        print('Deactivation failed: No response received')
+        
     # Activate the license
     activation_result = license_manager.activate(api_key, product_id, instance, obj, product_version)
-    
     if activation_result is not None:
         print('Activation result:', activation_result)
         print('Text result:', activation_result.text)
@@ -54,16 +61,11 @@ def main():
     status_result = license_manager.status(api_key, product_id, instance)
     if status_result is not None:
         print('License status:', status_result)
+        print('License status:', status_result.text)
     else:
         print('Failed to retrieve license status')
 
-    # Deactivate the license
-    deactivation_result = license_manager.deactivate(api_key, product_id, instance)
-    if deactivation_result is not None:
-        print('Deactivation result:', deactivation_result)
-        print('Deactivation result:', deactivation_result.text)
-    else:
-        print('Deactivation failed: No response received')
+
 
     # Product list
     product_list_result = license_manager.product_list(api_key, instance)
@@ -93,6 +95,7 @@ def main():
     update_result = license_manager.update(api_key, product_id, instance,  product_name, product_version)
     if update_result is not None:
         print('Update:', update_result)
+        print('Update:', update_result.text)
     else:
         print('Failed to perform update')
 
