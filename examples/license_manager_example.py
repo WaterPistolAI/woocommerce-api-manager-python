@@ -1,6 +1,6 @@
 import os
 import logging
-from woocommerce_api_manager import APIManager
+from woocommerce_api_manager import APIKeyManager
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -33,8 +33,8 @@ def main():
         logger.error("WC_PRODUCT_ID must be a valid integer")
         raise ValueError("WC_PRODUCT_ID must be a valid integer")
 
-    # Instantiate APIManager
-    license_manager = APIManager(url)
+    # Instantiate APIKeyManager
+    license_manager = APIKeyManager(url)
     
     # Deactivate the license
     deactivation_result = license_manager.deactivate(api_key, product_id, instance)

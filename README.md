@@ -22,10 +22,10 @@ pip install git+https://github.com/unclemusclez/wc-api-manager-python
 Here's a simple example of how to use the library:
 
 ```python
-from woocommerce_api_manager import APIManager
+from woocommerce_api_manager import APIKeyManager
 
 # Initialize the API manager
-api_manager = APIManager(your_api_url, your_consumer_key, your_consumer_secret)
+api_manager = APIKeyManager(your_api_url, your_consumer_key, your_consumer_secret)
 
 # Make an API call
 response = api_manager.get('products')
@@ -36,11 +36,11 @@ print(response.json())
 
 ### License Manager Example
 
-For more advanced usage, you can utilize the `APIManager` class to manage licenses:
+For more advanced usage, you can utilize the `APIKeyManager` class to manage licenses:
 
 ```python
 import os
-from woocommerce_api_manager import APIManager
+from woocommerce_api_manager import APIKeyManager
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -54,8 +54,8 @@ obj = os.getenv('WCAM_OBJ', None)
 product_version = os.getenv('WCAM_PRODUCT_VERSION', '')
 product_name = os.getenv('WCAM_PRODUCT_NAME', '')
 
-# Instantiate APIManager
-license_manager = APIManager(url)
+# Instantiate APIKeyManager
+license_manager = APIKeyManager(url)
 
 # Deactivate the license
 deactivation_result = license_manager.deactivate(api_key, product_id, instance)
@@ -82,7 +82,7 @@ authenticated_information_result = license_manager.authenticated_information(api
 update_result = license_manager.update(api_key, product_id, product_name, instance, product_version)
 ```
 
-This example demonstrates how to use the `APIManager` class for various license management operations.
+This example demonstrates how to use the `APIKeyManager` class for various license management operations.
 
 ## Documentation
 

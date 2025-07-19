@@ -1,15 +1,15 @@
 from typing import Optional
 from woocommerce import API
 
-class APIManager:
+class APIKeyManager:
     """
-    Manages license-related operations through the WooCommerce API Manager.
+    Manages license-related operations through the WooCommerce API Key Manager.
     """
     
     def __init__(self, url: str):
 
         """
-        Initializes the APIManager.
+        Initializes the APIKeyManager.
         
         :param url: The URL of the WooCommerce store (e.g., https://yourstore.com).
         # :param consumer_key: The consumer key for the WooCommerce API.
