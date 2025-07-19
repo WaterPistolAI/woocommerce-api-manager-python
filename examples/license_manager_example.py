@@ -1,6 +1,6 @@
 import os
 import logging
-from woocommerce_api_manager import APIKeyManager
+from woocommerce_api_manager import KestrelAPIManager
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -34,7 +34,7 @@ def main():
         raise ValueError("WC_PRODUCT_ID must be a valid integer")
 
     # Instantiate APIKeyManager
-    license_manager = APIKeyManager(url)
+    license_manager = KestrelAPIManager(url)
     
     # Deactivate the license
     deactivation_result = license_manager.deactivate(api_key, product_id, instance)

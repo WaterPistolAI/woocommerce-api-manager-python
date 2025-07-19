@@ -1,7 +1,7 @@
 from typing import Optional
 from woocommerce import API
 
-class APIKeyManager:
+class KestrelAPIManager:
     """
     Manages license-related operations through the WooCommerce API Key Manager.
     """
@@ -12,10 +12,6 @@ class APIKeyManager:
         Initializes the APIKeyManager.
         
         :param url: The URL of the WooCommerce store (e.g., https://yourstore.com).
-        # :param consumer_key: The consumer key for the WooCommerce API.
-        # :param consumer_secret: The consumer secret for the WooCommerce API.
-        # :param product_id: The ID of the product.
-        # :param software_version: The version of the software.
         """
         self.wcapi = API(
             url=url,
