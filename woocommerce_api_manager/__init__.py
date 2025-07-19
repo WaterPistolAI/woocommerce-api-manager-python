@@ -6,7 +6,7 @@ class KestrelAPIManager:
     Manages license-related operations through the WooCommerce API Key Manager.
     """
     
-    def __init__(self, url: str):
+    def __init__(self, url: str, consumer_key: str = '', consumer_secret: str = '', timeout: int = 10):
 
         """
         Initializes the APIKeyManager.
@@ -15,12 +15,13 @@ class KestrelAPIManager:
         """
         self.wcapi = API(
             url=url,
-            consumer_key='',
-            consumer_secret='',
+            consumer_key=consumer_key,
+            consumer_secret=consumer_secret,
             wp_api=False,
             version="wc-am-api",
+            timeout=timeout,
         )
-        self.endpoint=''
+        # self.endpoint=''
 
     def _handle_response(self, response):
         """Parse API response and return JSON dict or None on failure."""
@@ -53,7 +54,7 @@ class KestrelAPIManager:
             'version': version 
         }
         # print(f"Activate args: {args}")
-        response = self.wcapi.get(self.endpoint, params=args)
+        response = self.wcapi.get(self, params=args)
         return self._handle_response(response)
 
     def deactivate(self, api_key: str, product_id: int, instance: str):
@@ -73,7 +74,7 @@ class KestrelAPIManager:
 
         }
         # print(f"Deactivate args: {args}")
-        response = self.wcapi.get(self.endpoint, params=args)
+        response = self.wcapi.get(self, params=args)
         return self._handle_response(response)
 
     def status(self, api_key: str, product_id: int, instance: str, version: Optional[str] = None):
@@ -94,7 +95,7 @@ class KestrelAPIManager:
             'version': version
         }
         # print(f"Status args: {args}")
-        response = self.wcapi.get(self.endpoint, params=args)
+        response = self.wcapi.get(self, params=args)
         return self._handle_response(response)
 
     def product_list(self, api_key: str, instance: str):
@@ -111,7 +112,7 @@ class KestrelAPIManager:
             'instance': instance
         }
         # print(f"Product list args: {args}")
-        response = self.wcapi.get(self.endpoint, params=args)
+        response = self.wcapi.get(self, params=args)
         return self._handle_response(response)
 
     def verify_api_key_is_active(self, api_key: str):
@@ -126,7 +127,7 @@ class KestrelAPIManager:
             'api_key': api_key
         }
         # print(f"Verify API key args: {args}")
-        response = self.wcapi.get(self.endpoint, params=args)
+        response = self.wcapi.get(self, params=args)
         return self._handle_response(response)
 
     def information(self, product_id: int, plugin_name: str):
@@ -144,7 +145,7 @@ class KestrelAPIManager:
         }
         # print(f"Information args: {args}")
         # print(f"Update args: {args}")
-        response = self.wcapi.get(self.endpoint, params=args)
+        response = self.wcapi.get(self, params=args)
         return self._handle_response(response)
     
     def authenticated_information(self, api_key: str, product_id: int, plugin_name: str, instance: str, version: str):
@@ -168,7 +169,7 @@ class KestrelAPIManager:
         }
         # print(f"Information args: {args}")
         # print(f"Update args: {args}")
-        response = self.wcapi.get(self.endpoint, params=args)
+        response = self.wcapi.get(self, params=args)
         return self._handle_response(response)
 
 
@@ -194,5 +195,5 @@ class KestrelAPIManager:
         }
         if slug:
             args['slug'] = slug
-        response = self.wcapi.get(self.endpoint, params=args)
+        response = self.wcapi.get(self, params=args)
         return self._handle_response(response)
